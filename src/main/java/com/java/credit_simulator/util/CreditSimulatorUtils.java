@@ -50,4 +50,11 @@ public class CreditSimulatorUtils {
     public static BigDecimal getInstallmentYearly(BigDecimal installmentMonthly){
         return installmentMonthly.multiply(BigDecimal.valueOf(12));
     }
+
+    public static BigDecimal formatBigDecimal(BigDecimal value) {
+        if (value == null) {
+            return BigDecimal.ZERO;
+        }
+        return value.setScale(2, RoundingMode.HALF_UP);
+    }
 }

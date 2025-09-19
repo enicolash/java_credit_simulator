@@ -65,10 +65,10 @@ public class CalculateLoanServiceImplement implements CalculateLoanService {
             CalculateResponse.YearlyInformation yearlyInformation = new CalculateResponse.YearlyInformation(
                     year,
                     currentInterestRate,
-                    String.format("%.2f",principalAmount),
-                    String.format("%.2f",totalLoanAmount),
-                    String.format("%.2f",installmentMonthly),
-                    String.format("%.2f",installmentYearly)
+                    CreditSimulatorUtils.formatBigDecimal(principalAmount),
+                    CreditSimulatorUtils.formatBigDecimal(totalLoanAmount),
+                    CreditSimulatorUtils.formatBigDecimal(installmentMonthly),
+                    CreditSimulatorUtils.formatBigDecimal(installmentYearly)
             );
 
             yearlyInformations.add(yearlyInformation);
@@ -81,12 +81,12 @@ public class CalculateLoanServiceImplement implements CalculateLoanService {
             );
         }
 
-        Double installmentMonthlyAverage = calculateAverageInstallmentMonthly(yearlyInformations,tenure).doubleValue();
+        BigDecimal installmentMonthlyAverage = calculateAverageInstallmentMonthly(yearlyInformations,tenure);
         log.debug("[calculate] installmentMonthlyAverage : {},  ", installmentMonthlyAverage);
 
         return CalculateResponse.builder()
                 .yearlyInformations(yearlyInformations)
-                .installmentMonthlyAverage(String.format("%.2f",installmentMonthlyAverage))
+                .installmentMonthlyAverage(CreditSimulatorUtils.formatBigDecimal(installmentMonthlyAverage))
                 .build();
     }
 
@@ -106,15 +106,15 @@ public class CalculateLoanServiceImplement implements CalculateLoanService {
         }
 
         double finalRate = CreditSimulatorUtils.getFinalRate(baseRate,additionalRate);
+        double roundedRate = Math.round(finalRate * 100.0) / 100.0;
 
         log.debug("[calculateInterestRate] Year : {}, Final Rate : {} ", year, finalRate);
-        return finalRate;
+        return roundedRate;
     }
 
     private BigDecimal calculateAverageInstallmentMonthly(List<CalculateResponse.YearlyInformation> yearlyInformations, int tenure) {
         BigDecimal totalInstallmentYearly = yearlyInformations.stream()
                 .map(CalculateResponse.YearlyInformation::getInstallmentYearly)
-                .map(BigDecimal::new)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         int totelMontlyTenure = tenure * 12;

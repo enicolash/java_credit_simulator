@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,7 +51,7 @@ public class CreditSimulatorServiceImplementTest {
 
         CalculateResponse expectedResponse = CalculateResponse.builder()
                 .yearlyInformations(new ArrayList<>())
-                .installmentMonthlyAverage("2441233.33")
+                .installmentMonthlyAverage(new BigDecimal(2441233.33))
                 .build();
 
         when(calculateLoanService.calculate(any(CalculateRequest.class)))
@@ -86,7 +87,7 @@ public class CreditSimulatorServiceImplementTest {
         when(thirdPartyService.loadExistingData()).thenReturn(mockThirdPartyResponse);
         CalculateResponse expected = CalculateResponse.builder()
                 .yearlyInformations(new ArrayList<>())
-                .installmentMonthlyAverage("9309584.29")
+                .installmentMonthlyAverage(new BigDecimal(9309584.29))
                 .build();
 
         when(calculateLoanService.calculate(any(CalculateRequest.class)))

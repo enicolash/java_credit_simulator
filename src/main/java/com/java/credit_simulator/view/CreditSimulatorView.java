@@ -193,7 +193,7 @@ public class CreditSimulatorView implements CommandLineRunner {
             for (CalculateResponse.YearlyInformation yearInfo : lastResult.getYearlyInformations()) {
                 writer.write(String.format("Year %d: %s/month, Interest Rate: %.1f%%\n",
                         yearInfo.getYear(),
-                        yearInfo.getMonthlyInstallment(),
+                        yearInfo.getInstallmentMonthly(),
                         yearInfo.getInterestRate()));
             }
 
@@ -216,7 +216,7 @@ public class CreditSimulatorView implements CommandLineRunner {
             for (int year = 0; year < sheet.getYearlyInformations().size(); year++) {
                 System.out.printf("  Year %d: %.0f/month, Interest Rate: %.1f%%\n",
                         year + 1,
-                        sheet.getYearlyInformations().get(year).getMonthlyInstallment(),
+                        sheet.getYearlyInformations().get(year).getInstallmentMonthly(),
                         sheet.getYearlyInformations().get(year).getInterestRate());
             }
         }
@@ -347,7 +347,7 @@ public class CreditSimulatorView implements CommandLineRunner {
         for (CalculateResponse.YearlyInformation yearInfo : response.getYearlyInformations()) {
             System.out.printf("Year %d: %.2f/month, Interest Rate: %.1f%%\n",
                     yearInfo.getYear(),
-                    yearInfo.getMonthlyInstallment(),
+                    yearInfo.getInstallmentMonthly(),
                     yearInfo.getInterestRate());
         }
         System.out.println("--------------------------------\n");
