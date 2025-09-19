@@ -83,11 +83,17 @@ public class CreditSimulatorServiceImplement implements CreditSimulatorService {
     }
 
     private void validateVehicleYear(CalculateRequest request) {
+        int currentYear = Year.now().getValue();
         if (request.getVehicleCondition().toString().equals(VehicleConditionSpec.BARU.getCondition())) {
-            int currentYear = Year.now().getValue();
             if (request.getVehicleYear() < (currentYear - 1)) {
                 throw new IllegalArgumentException(
                         String.format("New vehicle year cannot be less than %d", currentYear - 1));
+            }
+        }
+        else {
+            if (request.getVehicleYear() > currentYear) {
+                throw new IllegalArgumentException(
+                        String.format("Please enter a valid year (Valid year until " + Year.now().getValue() + ")"));
             }
         }
     }

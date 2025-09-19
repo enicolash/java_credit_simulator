@@ -257,8 +257,8 @@ public class CreditSimulatorView implements CommandLineRunner {
             try {
                 Integer year = Integer.parseInt(reader.readLine().trim());
 
-                if (year < 1900 || year > Year.now().getValue() + 1) {
-                    System.out.println("Please enter a valid year between 1900 and " + (Year.now().getValue() + 1));
+                if (year > Year.now().getValue()) {
+                    System.out.println("Please enter a valid year (Valid year until " + Year.now().getValue() + ")");
                     continue;
                 }
 
