@@ -21,4 +21,4 @@ COPY file_inputs.txt .
 EXPOSE 8080
 
 # Run only web server (disable console interface)
-CMD ["java", "-jar", "target/credit-simulator-0.0.1-SNAPSHOT.jar", "file_inputs.txt"]
+CMD ["java", "-jar", "target/credit_simulator-0.0.1-SNAPSHOT.jar", "file_inputs.txt"]
